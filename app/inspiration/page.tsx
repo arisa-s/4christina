@@ -1,5 +1,5 @@
 import { FC } from "react";
 
 export default function InspirationPage() {
-  return <>/inspiration</>;
+  return <h1>/inspiration</h1>;
 }

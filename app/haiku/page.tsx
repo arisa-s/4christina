@@ -1,5 +1,5 @@
 import { FC } from "react";
 
 export default function HaikuPage() {
-  return <>/haiku</>;
+  return <h1>/haiku</h1>;
 }
