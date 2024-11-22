@@ -16,7 +16,7 @@ const vollkorn = Vollkorn({
 });
 
 export const metadata: Metadata = {
-  title: "Christina Soorumaa Sandra",
+  title: "Christina Sõõrumaa Sandra",
   description: "Her poetry archive",
 };
 
