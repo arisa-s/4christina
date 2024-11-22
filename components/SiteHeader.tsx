@@ -4,6 +4,7 @@ import { useSpring, animated } from "react-spring"; // Classic react-spring impo
 import Image from "next/image";
 import React from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const LINKS = [
   {
@@ -42,14 +43,14 @@ const NavLink: React.FC<{
   selected?: boolean;
 }> = ({ href, children, selected }) => {
   return (
-    <a
+    <Link
       href={href}
       className={`${
         selected ? "text-primary font-semibold" : "text-muted"
       } hover:text-primary hover:font-semibold uppercase text-xs`}
     >
       {children}
-    </a>
+    </Link>
   );
 };
 
@@ -78,7 +79,7 @@ const NavigationMenu: React.FC<{ orientation: "horizontal" | "vertical" }> = ({
   );
 };
 
-const MobileHeader: React.FC<{}> = () => {
+const MobileHeader: React.FC = () => {
   const pathname = usePathname();
   const displayPathname = pathname.split("/").pop()?.replace(/-/g, " ");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -92,9 +93,9 @@ const MobileHeader: React.FC<{}> = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-16">
-      <a href="/">
+      <Link href="/">
         <Image src={"/logo.png"} alt="logo" width={80} height={20} />
-      </a>
+      </Link>
       <h2 className="text-primary font-semibold uppercase text-xs mr-12">
         {displayPathname}
       </h2>
@@ -142,11 +143,11 @@ const SiteHeader: React.FC = () => {
   );
 };
 
-const DesktopHeader: React.FC<{}> = () => (
+const DesktopHeader: React.FC = () => (
   <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-16">
-    <a href="/">
+    <Link href="/">
       <Image src={"/logo.png"} alt="logo" width={100} height={20} />
-    </a>
+    </Link>
     <NavigationMenu orientation="horizontal" />
   </div>
 );
