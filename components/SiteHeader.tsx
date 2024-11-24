@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSpring, animated } from "react-spring"; // Classic react-spring import
-import Image from "next/image";
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import useClickOutside from "@/util/useClickOutside";
 
 const LINKS = [
   {
@@ -46,8 +46,8 @@ const NavLink: React.FC<{
     <Link
       href={href}
       className={`${
-        selected ? "text-primary font-semibold" : "text-muted"
-      } hover:text-primary hover:font-semibold uppercase text-xs`}
+        selected ? "text-primary font-medium" : "text-muted"
+      } hover:text-primary hover:font-medium uppercase text-xs`}
     >
       {children}
     </Link>
@@ -83,20 +83,25 @@ const MobileHeader: React.FC = () => {
   const pathname = usePathname();
   const displayPathname = pathname.split("/").pop()?.replace(/-/g, " ");
   const [menuOpen, setMenuOpen] = useState(false);
+  const ref = useClickOutside<HTMLDivElement>(() => setMenuOpen(false));
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   const menuAnimation = useSpring({
-    transform: menuOpen ? "translateY(5%)" : "translateY(0%)",
+    transform: menuOpen ? "translateY(5%)" : "translateY(-10%)",
     opacity: menuOpen ? 1 : 0,
   });
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
 
   return (
     <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-16">
       <Link href="/">
-        <Image src={"/logo.png"} alt="logo" width={80} height={20} />
+        <h1 className="text-2xl font-semibold underline">Portfolio</h1>
       </Link>
-      <h2 className="text-primary font-semibold uppercase text-xs mr-12">
+      <h2 className="text-primary font-medium uppercase text-xs mr-20">
         {displayPathname}
       </h2>
       <button
@@ -122,6 +127,7 @@ const MobileHeader: React.FC = () => {
       </button>
       <animated.div
         style={menuAnimation}
+        ref={ref}
         className="absolute top-16 left-0 w-full bg-primary-bg lg:hidden"
       >
         <NavigationMenu orientation="vertical" />
@@ -146,7 +152,7 @@ const SiteHeader: React.FC = () => {
 const DesktopHeader: React.FC = () => (
   <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-16">
     <Link href="/">
-      <Image src={"/logo.png"} alt="logo" width={100} height={20} />
+      <h1 className="text-2xl font-semibold underline">Portfolio</h1>
     </Link>
     <NavigationMenu orientation="horizontal" />
   </div>
