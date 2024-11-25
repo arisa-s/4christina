@@ -1,9 +1,7 @@
 import Link from "next/link";
 import { FC } from "react";
 
-export interface SiteFooterProps {}
-
-export const SiteFooter: FC<SiteFooterProps> = ({}) => {
+export const SiteFooter: FC = () => {
   return (
     <footer className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-16">
       <p className="text-xs text-muted uppercase">
