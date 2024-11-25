@@ -12,9 +12,10 @@ export const SiteFooter: FC<SiteFooterProps> = ({}) => {
 
       {/* TODO: ask for social media links */}
       <div className="flex space-x-6">
-        <SocialLink href="" label="Facebook" />
-        <SocialLink href="" label="Twitter" />
-        <SocialLink href="" label="Instagram" />
+        <SocialLink
+          href="mailto:Christinasoorumaa@icloud.com"
+          label="Christinasoorumaa@icloud.com"
+        />
       </div>
     </footer>
   );
