@@ -5,34 +5,31 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import useClickOutside from "@/util/useClickOutside";
+import Image from "next/image";
 
 const LINKS = [
   {
-    href: "poetry",
+    href: "/poetry",
     label: "Poetry",
   },
   {
-    href: "misc-prose",
+    href: "/misc-prose",
     label: "Misc Prose",
   },
   {
-    href: "poet-of-the-month",
+    href: "/poet-of-the-month",
     label: "Poet of the month",
   },
   {
-    href: "haiku",
+    href: "/haiku",
     label: "Haiku log",
   },
   {
-    href: "rants-essay-pillow-talk",
-    label: "Rants essays pillow talk",
-  },
-  {
-    href: "reading-log",
+    href: "/reading-log",
     label: "Reading Log",
   },
   {
-    href: "inspiration",
+    href: "/inspiration",
     label: "Inspiration",
   },
 ];
@@ -152,7 +149,13 @@ const SiteHeader: React.FC = () => {
 const DesktopHeader: React.FC = () => (
   <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-16">
     <Link href="/">
-      <h1 className="text-2xl font-semibold underline">Portfolio</h1>
+      <Image
+        className="absolute top-4 w-48"
+        src="/logo.png"
+        width={1053}
+        height={536}
+        alt="Paratex"
+      />
     </Link>
     <NavigationMenu orientation="horizontal" />
   </div>

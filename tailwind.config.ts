@@ -32,8 +32,8 @@ export default {
         },
       },
       fontFamily: {
-        mont: ["var(--font-montserrat)"],
-        vol: ["var(--font-vollkorn)"],
+        nunito: ["var(--font-nunito-sans)"],
+        ebGaramond: ["var(--font-eb-garamond)"],
       },
     },
   },
