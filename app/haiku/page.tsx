@@ -46,7 +46,7 @@ export default async function IndexPage() {
           quote="‘shasei’ (copying what is observed) (think western painterly influence-realism"
           author="Masaoka Shiki"
         />
-        <p className="">
+        <p>
           or RENGA (Poetic form which alternates 5-7-5 and 7-7 syllable verses
           up to fifty times, to a total of 100 verse units, normally composed by
           two or more persons, occasional; literary game. Relies on disjunctive

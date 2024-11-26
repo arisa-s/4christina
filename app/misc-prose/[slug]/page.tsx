@@ -12,7 +12,7 @@ export default async function PostPage({
 }) {
   const miscProse = await client.fetch<SanityDocument>(
     POST_QUERY,
-    params,
+    { slug: params.slug }, // Ensure the slug is passed correctly
     options
   );
 
@@ -25,4 +25,12 @@ export default async function PostPage({
       <PortableText value={miscProse.body} />
     </article>
   );
+}
+
+// Dynamic route metadata
+export async function generateStaticParams() {
+  // Example query to fetch all slugs for this dynamic route
+  const slugs = await client.fetch(`*[_type == "miscProse"].slug.current`);
+
+  return slugs.map((slug: string) => ({ slug }));
 }

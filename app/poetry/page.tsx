@@ -27,7 +27,7 @@ export default async function IndexPage() {
   );
 
   return (
-    <div className="mx-auto w-full p-12">
+    <div className="mx-auto w-full p-12" key="poetry-links">
       <hr />
       {Object.entries(groupedPoems).map(([year, poems]) => (
         <>

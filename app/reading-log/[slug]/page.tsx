@@ -7,9 +7,8 @@ import imageUrlBuilder from "@sanity/image-url";
 import ConditionalWrap from "@/components/ConditionalWrap";
 
 const POETS_QUERY = `*[
-  _type == "readingLog"
-  && defined(slug.current)
-]|order(publishedAt desc)`;
+  _type == "readingLog" && defined(slug.current)
+] | order(publishedAt desc)`;
 
 const { projectId, dataset } = client.config();
 const urlFor = (source: SanityImageSource) =>
@@ -19,12 +18,22 @@ const urlFor = (source: SanityImageSource) =>
 
 const options = { next: { revalidate: 30 } };
 
+interface ReadingLog extends SanityDocument {
+  slug: { current: string };
+  poet: string;
+  image?: SanityImageSource;
+}
+
 export default async function IndexPage() {
-  const readingLogs = await client.fetch<SanityDocument[]>(
+  const readingLogs = await client.fetch<ReadingLog[]>(
     POETS_QUERY,
     {},
     options
   );
+
+  if (!readingLogs || readingLogs.length === 0) {
+    return <p>No reading logs found.</p>;
+  }
 
   return (
     <div>
@@ -37,7 +46,7 @@ export default async function IndexPage() {
   );
 }
 
-const BookCard = ({ readingLog }: { readingLog: SanityDocument }) => {
+const BookCard = ({ readingLog }: { readingLog: ReadingLog }) => {
   const readingLogImageUrl = readingLog.image
     ? urlFor(readingLog.image)?.width(150).height(200).url()
     : null;
@@ -45,19 +54,26 @@ const BookCard = ({ readingLog }: { readingLog: SanityDocument }) => {
   return (
     <li>
       <ConditionalWrap
-        condition={readingLog.slug.current}
+        condition={!!readingLog.slug.current}
         wrapper={(children) => (
-          <Link href={`poet-of-the-month/${readingLog.slug.current}`}>
+          <Link href={`/poet-of-the-month/${readingLog.slug.current}`}>
             {children}
           </Link>
         )}
       >
-        <img
-          src={readingLogImageUrl!}
-          alt={readingLog.poet}
-          width="150"
-          height="300"
-        />
+        {readingLogImageUrl ? (
+          <img
+            src={readingLogImageUrl}
+            alt={readingLog.poet}
+            width="150"
+            height="300"
+            className="object-cover"
+          />
+        ) : (
+          <div className="w-[150px] h-[300px] bg-gray-200 flex items-center justify-center text-sm">
+            No Image
+          </div>
+        )}
       </ConditionalWrap>
     </li>
   );
