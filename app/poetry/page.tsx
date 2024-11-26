@@ -30,8 +30,8 @@ export default async function IndexPage() {
     <div className="mx-auto w-full p-12" key="poetry-links">
       <hr />
       {Object.entries(groupedPoems).map(([year, poems]) => (
-        <>
-          <div key={year} className="flex space-x-24 p-12">
+        <div key={year}>
+          <div className="flex space-x-24 p-12">
             <h2 className="text-3xl font-medium font-ebGaramond">{year}</h2>
             <ul className="space-y-6">
               {poems.map((poem) => (
@@ -40,7 +40,7 @@ export default async function IndexPage() {
             </ul>
           </div>
           <hr />
-        </>
+        </div>
       ))}
     </div>
   );
