@@ -5,7 +5,6 @@ import { client } from "@/sanity/client";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import imageUrlBuilder from "@sanity/image-url";
 import ConditionalWrap from "@/components/ConditionalWrap";
-import Image from "next/image";
 
 const POETS_QUERY = `*[
   _type == "readingLog"

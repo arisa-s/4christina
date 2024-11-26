@@ -2,7 +2,7 @@ import { PortableTextReactComponents } from "@portabletext/react";
 
 export const sanityCustomComponents: Partial<PortableTextReactComponents> = {
   types: {
-    image: ({ value }: { value: any }) => (
+    image: ({ value }) => (
       <img src={value.asset.url} alt={value.alt || "Image"} />
     ),
   },
