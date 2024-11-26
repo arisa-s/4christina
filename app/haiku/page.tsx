@@ -61,12 +61,11 @@ export default async function IndexPage() {
       <div>
         <ul className="space-y-6">
           {haikus.map((haiku) => (
-            <div className="">
+            <div key={haiku._id}>
               <div>
                 {Array.isArray(haiku.body) && (
                   <PortableText
                     value={haiku.body}
-                    // @ts-ignore
                     components={haikuComponents}
                   />
                 )}

@@ -22,7 +22,6 @@ export default async function PostPage({
       {Array.isArray(poetOfTheMonth.body) && (
         <PortableText
           value={poetOfTheMonth.body}
-          // @ts-ignore
           components={sanityCustomComponents}
         />
       )}

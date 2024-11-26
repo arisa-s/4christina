@@ -16,11 +16,7 @@ export default async function PostPage({
   return (
     <article className="container mx-auto min-h-screen max-w-3xl p-8 flex flex-col gap-4">
       {Array.isArray(poem.body) && (
-        <PortableText
-          value={poem.body}
-          // @ts-ignore
-          components={sanityCustomComponents}
-        />
+        <PortableText value={poem.body} components={sanityCustomComponents} />
       )}
     </article>
   );

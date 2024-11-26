@@ -26,8 +26,8 @@ export default async function IndexPage() {
   );
 
   return (
-    <div>
-      <ul className="grid grid-cols-6 gap-4">
+    <div className="mx-auto p-6 pt-12">
+      <ul className="grid grid-cols-5 gap-4">
         {poetOfTheMonths.map((poetOfTheMonth) => (
           <PoetCard poetOfTheMonth={poetOfTheMonth} key={poetOfTheMonth._id} />
         ))}
@@ -38,7 +38,7 @@ export default async function IndexPage() {
 
 const PoetCard = ({ poetOfTheMonth }: { poetOfTheMonth: SanityDocument }) => {
   const poetOfTheMonthImageUrl = poetOfTheMonth.image
-    ? urlFor(poetOfTheMonth.image)?.width(150).height(200).url()
+    ? urlFor(poetOfTheMonth.image)?.url()
     : null;
 
   return (
@@ -46,12 +46,7 @@ const PoetCard = ({ poetOfTheMonth }: { poetOfTheMonth: SanityDocument }) => {
       <Link href={`poet-of-the-month/${poetOfTheMonth.slug.current}`}>
         <div className="space-y-2">
           {poetOfTheMonthImageUrl && (
-            <img
-              src={poetOfTheMonthImageUrl}
-              alt={poetOfTheMonth.poet}
-              width="150"
-              height="300"
-            />
+            <img src={poetOfTheMonthImageUrl} alt={poetOfTheMonth.poet} />
           )}
           <div>
             <p className="text-sm text-secondary">{poetOfTheMonth.month}</p>

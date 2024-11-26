@@ -54,7 +54,6 @@ const PoemLink = ({ poem }: { poem: SanityDocument }) => {
           <PortableText
             key={poem._id}
             value={poem.title}
-            // @ts-ignore
             components={haikuTitleComponents}
           />
         )}

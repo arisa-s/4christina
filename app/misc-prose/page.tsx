@@ -26,8 +26,8 @@ export default async function IndexPage() {
   );
 
   return (
-    <div>
-      <ul className="grid grid-cols-6 gap-4">
+    <div className="mx-auto p-6 pt-12">
+      <ul className="grid grid-cols-3 gap-4">
         {miscProses.map((miscProse) => (
           <PostCard miscProse={miscProse} key={miscProse._id} />
         ))}
@@ -43,7 +43,7 @@ const PostCard = ({ miscProse }: { miscProse: SanityDocument }) => {
 
   return (
     <li>
-      <Link href={`poet-of-the-month/${miscProse.slug.current}`}>
+      <Link href={`/misc-prose/${miscProse.slug.current}`}>
         <div className="space-y-2">
           {miscProseImageUrl && (
             <img src={miscProseImageUrl} alt={miscProse.poet} />
@@ -52,7 +52,7 @@ const PostCard = ({ miscProse }: { miscProse: SanityDocument }) => {
             {miscProse.title && (
               <p className="text-sm text-secondary">{miscProse.tag}</p>
             )}
-            <h2 className="font-medium">{miscProse.title}</h2>
+            <h2 className="text-lg font-medium">{miscProse.title}</h2>
             {miscProse.tag && (
               <p className="text-base text-primary">{miscProse.summary}</p>
             )}
