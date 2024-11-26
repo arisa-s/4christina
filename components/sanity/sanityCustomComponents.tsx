@@ -1,11 +1,13 @@
-export const sanityCustomComponents = {
+import { PortableTextReactComponents } from "@portabletext/react";
+
+export const sanityCustomComponents: Partial<PortableTextReactComponents> = {
   types: {
     image: ({ value }: { value: any }) => (
       <img src={value.asset.url} alt={value.alt || "Image"} />
     ),
   },
   marks: {
-    link: ({ children, value }: { children: React.ReactNode; value: any }) => (
+    link: ({ children, value }) => (
       <a
         href={value.href}
         target="_blank"
@@ -17,13 +19,11 @@ export const sanityCustomComponents = {
     ),
   },
   block: {
-    normal: ({ children }: { children: React.ReactNode }) => (
-      <p className="mb-3 text-primary">{children}</p>
-    ),
-    h1: ({ children }: { children: React.ReactNode }) => (
+    normal: ({ children }) => <p className="mb-3 text-primary">{children}</p>,
+    h1: ({ children }) => (
       <h1 className="text-4xl font-bold my-4">{children}</h1>
     ),
-    h2: ({ children }: { children: React.ReactNode }) => (
+    h2: ({ children }) => (
       <h2 className="text-3xl font-semibold my-3">{children}</h2>
     ),
   },

@@ -1,7 +1,7 @@
-export const haikuComponents = {
+import { PortableTextReactComponents } from "@portabletext/react";
+
+export const haikuComponents: Partial<PortableTextReactComponents> = {
   block: {
-    normal: ({ children }: { children: React.ReactNode }) => (
-      <pre className="">{children}</pre>
-    ),
+    normal: ({ children }) => <pre className="">{children}</pre>,
   },
 };

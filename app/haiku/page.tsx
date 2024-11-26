@@ -19,7 +19,9 @@ export default async function IndexPage() {
   return (
     <div className="max-w-3xl mx-auto p-12 space-y-12">
       <div className="space-y-4">
-        <h2 className="text-2xl">Haiku definition:</h2>
+        <h2 className="text-3xl font-ebGaramond font-medium">
+          Haiku definition:
+        </h2>
         <HaikuDefinitionQuote
           quote="A speck of dust sitting on a cloudless mirror would strike the eye, we’d wish the world were"
           author="Saigyo (118.1190)"

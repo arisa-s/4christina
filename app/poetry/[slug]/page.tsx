@@ -1,6 +1,6 @@
 import { PortableText, type SanityDocument } from "next-sanity";
 import { client } from "@/sanity/client";
-import { sanityCustomComponents } from "@/components/sanityCustomComponents";
+import { sanityCustomComponents } from "@/components/sanity/sanityCustomComponents";
 
 const POST_QUERY = `*[_type == "poem" && slug.current == $slug][0]`;
 
