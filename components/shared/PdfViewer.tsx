@@ -10,14 +10,8 @@ export interface PDFViewerProps {
 }
 
 export const PDFViewer: FC<PDFViewerProps> = ({ fileUrl }) => {
-  const [numPages, setNumPages] = useState<number>();
-  const [pageNumber, setPageNumber] = useState<number>(1);
   const [scale, setScale] = useState<number>(5);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
-    setNumPages(numPages);
-  }
 
   function onPageLoadSuccess(pdfPage: any): void {
     if (containerRef.current) {
@@ -30,9 +24,8 @@ export const PDFViewer: FC<PDFViewerProps> = ({ fileUrl }) => {
 
   return (
     <div ref={containerRef} style={{ width: "100%", overflow: "auto" }}>
-      <Document file={fileUrl} onLoadSuccess={onDocumentLoadSuccess}>
+      <Document file={fileUrl}>
         <Page
-          pageNumber={pageNumber}
           renderTextLayer={false}
           renderAnnotationLayer={false}
           onLoadSuccess={onPageLoadSuccess}
