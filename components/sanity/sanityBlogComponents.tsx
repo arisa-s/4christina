@@ -16,11 +16,6 @@ const PDFViewer = dynamic(
 
 export const sanityBlogComponents: Partial<PortableTextReactComponents> = {
   types: {
-    image: ({ value }: { value: { asset: { _ref: string } } }) => {
-      // const imageUrl = client.getImageUrl(value);
-      // return <img src={imageUrl} alt="Image" className="my-4 w-full" />;
-      return null;
-    },
     file: ({ value }: { value: { asset: { _ref: string } } }) => {
       // Extract the document ID from the _ref field
       const documentId = value.asset._ref
