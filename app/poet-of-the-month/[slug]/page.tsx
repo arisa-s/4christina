@@ -4,6 +4,7 @@ import { useEffect, useState, use } from "react";
 import { PortableText, type SanityDocument } from "next-sanity";
 import { client } from "@/sanity/client";
 import { sanityBlogComponents } from "@/components/sanity/sanityBlogComponents";
+import LoadingScreen from "@/components/shared/LoadingScreen";
 
 const POST_QUERY = `*[_type == "poetOfTheMonth" && slug.current == $slug][0]`;
 
@@ -36,7 +37,7 @@ export default function PostPage({ params }: { params: Params }) {
   }, [slug]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <LoadingScreen />;
   }
 
   if (error || !poetOfTheMonth) {

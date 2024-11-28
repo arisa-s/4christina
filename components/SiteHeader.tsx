@@ -97,7 +97,7 @@ const MobileHeader: React.FC = () => {
     <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-16">
       <Link href="/">
         <Image
-          className="w-24"
+          className="w-24 cursor-pointer"
           src="/logo.png"
           width={1053}
           height={536}
@@ -156,7 +156,7 @@ const DesktopHeader: React.FC = () => (
   <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-16">
     <Link href="/">
       <Image
-        className="absolute top-4 w-48"
+        className="absolute top-4 w-48 cursor-pointer"
         src="/logo.png"
         width={1053}
         height={536}
