@@ -27,7 +27,7 @@ export default async function IndexPage() {
 
   return (
     <div className="mx-auto p-6 pt-12">
-      <ul className="grid grid-cols-5 gap-6">
+      <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
         {readingLogs.map((readingLog) => (
           <BookCard readingLog={readingLog} key={readingLog._id} />
         ))}
