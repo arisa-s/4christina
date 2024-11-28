@@ -1,14 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import { PortableText, type SanityDocument } from "next-sanity";
 import { client } from "@/sanity/client";
-import { sanityCustomComponents } from "@/components/sanity/sanityCustomComponents";
+import { sanityBlogComponents } from "@/components/sanity/sanityBlogComponents";
 
 const POST_QUERY = `*[_type == "miscProse" && slug.current == $slug][0]`;
 
-export default function PostPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+interface Params {
+  slug: string;
+}
+
+export default function PostPage({ params }: { params: Params }) {
+  const { slug } = use<Params>(params);
   const [miscProse, setMiscProse] = useState<SanityDocument | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -39,10 +43,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
 
   return (
     <article className="container mx-auto min-h-screen max-w-3xl p-8 flex flex-col gap-4">
-      <PortableText
-        value={miscProse.body}
-        components={sanityCustomComponents}
-      />
+      <PortableText value={miscProse.body} components={sanityBlogComponents} />
     </article>
   );
 }

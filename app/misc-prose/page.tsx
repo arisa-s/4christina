@@ -4,6 +4,9 @@ import { type SanityDocument } from "next-sanity";
 import { client } from "@/sanity/client";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import imageUrlBuilder from "@sanity/image-url";
+import CardHeader from "@/components/shared/CardHeader";
+import CardTag from "@/components/shared/CardTag";
+import Paragraph from "@/components/shared/Paragraph";
 
 const MISCS_QUERY = `*[
   _type == "miscProse"
@@ -26,13 +29,11 @@ export default async function IndexPage() {
   );
 
   return (
-    <div className="mx-auto p-6 pt-12">
-      <ul className="grid grid-cols-3 gap-4">
-        {miscProses.map((miscProse) => (
-          <PostCard miscProse={miscProse} key={miscProse._id} />
-        ))}
-      </ul>
-    </div>
+    <ul className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 md:pt-6 lg:pt-12">
+      {miscProses.map((miscProse) => (
+        <PostCard miscProse={miscProse} key={miscProse._id} />
+      ))}
+    </ul>
   );
 }
 
@@ -46,15 +47,17 @@ const PostCard = ({ miscProse }: { miscProse: SanityDocument }) => {
       <Link href={`/misc-prose/${miscProse.slug.current}`}>
         <div className="space-y-2">
           {miscProseImageUrl && (
-            <img src={miscProseImageUrl} alt={miscProse.poet} />
+            <img
+              src={miscProseImageUrl}
+              alt={miscProse.poet}
+              className="w-full"
+            />
           )}
           <div>
-            {miscProse.title && (
-              <p className="text-sm text-secondary">{miscProse.tag}</p>
-            )}
-            <h2 className="text-lg font-medium">{miscProse.title}</h2>
+            {miscProse.title && <CardTag>{miscProse.tag}</CardTag>}
+            <CardHeader>{miscProse.title}</CardHeader>
             {miscProse.tag && (
-              <p className="text-base text-primary">{miscProse.summary}</p>
+              <Paragraph type="secondary">{miscProse.summary}</Paragraph>
             )}
           </div>
         </div>

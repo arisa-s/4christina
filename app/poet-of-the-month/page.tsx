@@ -4,6 +4,8 @@ import { type SanityDocument } from "next-sanity";
 import { client } from "@/sanity/client";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import imageUrlBuilder from "@sanity/image-url";
+import CardHeader from "@/components/shared/CardHeader";
+import CardTag from "@/components/shared/CardTag";
 
 const POETS_QUERY = `*[
   _type == "poetOfTheMonth"
@@ -26,8 +28,8 @@ export default async function IndexPage() {
   );
 
   return (
-    <div className="mx-auto p-6 pt-12">
-      <ul className="grid grid-cols-5 gap-4">
+    <div className="mx-auto md:pt-6 lg:pt-12">
+      <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
         {poetOfTheMonths.map((poetOfTheMonth) => (
           <PoetCard poetOfTheMonth={poetOfTheMonth} key={poetOfTheMonth._id} />
         ))}
@@ -49,10 +51,8 @@ const PoetCard = ({ poetOfTheMonth }: { poetOfTheMonth: SanityDocument }) => {
             <img src={poetOfTheMonthImageUrl} alt={poetOfTheMonth.poet} />
           )}
           <div>
-            <p className="text-sm text-secondary">{poetOfTheMonth.month}</p>
-            <h2 className="text-base font-bold text-primary">
-              {poetOfTheMonth.poet}
-            </h2>
+            <CardTag>{poetOfTheMonth.month}</CardTag>
+            <CardHeader>{poetOfTheMonth.poet}</CardHeader>
           </div>
         </div>
       </Link>

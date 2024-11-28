@@ -1,4 +1,4 @@
-import { AutoplayVideo } from "@/components/AutoplayVideo";
+import { AutoplayVideo } from "@/components/shared/AutoplayVideo";
 import Image from "next/image";
 
 export default function Home() {

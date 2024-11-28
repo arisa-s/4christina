@@ -96,7 +96,13 @@ const MobileHeader: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-16">
       <Link href="/">
-        <h1 className="text-2xl font-semibold underline">Portfolio</h1>
+        <Image
+          className="w-24"
+          src="/logo.png"
+          width={1053}
+          height={536}
+          alt="Paratex"
+        />
       </Link>
       <h2 className="text-primary font-medium uppercase text-xs mr-20">
         {displayPathname}

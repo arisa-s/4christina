@@ -1,7 +1,7 @@
 import { type SanityDocument } from "next-sanity";
 
 import { client } from "@/sanity/client";
-import { AutoplayVideo } from "@/components/AutoplayVideo";
+import { AutoplayVideo } from "@/components/shared/AutoplayVideo";
 
 const INSPIRATIONS_QUERY = `*[_type == "inspiration"] | order(publishedAt desc) {
   _id,
@@ -23,7 +23,7 @@ export default async function IndexPage() {
   );
 
   return (
-    <div className="columns-3 gap-4 space-y-6">
+    <div className="columns-2 md:columns-3 gap-2 md:gap-4 space-y-2 md:space-y-4">
       {inspirations.map((inspiration) => (
         <InspirationCard key={inspiration._id} inspiration={inspiration} />
       ))}

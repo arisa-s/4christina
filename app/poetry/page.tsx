@@ -2,7 +2,8 @@ import Link from "next/link";
 import { PortableText, type SanityDocument } from "next-sanity";
 
 import { client } from "@/sanity/client";
-import { haikuTitleComponents } from "@/components/sanity/haikuTitleComponents";
+import Header from "@/components/shared/Header";
+import { sanityTextsComponents } from "@/components/sanity/sanityTextsComponents";
 
 const POEMS_QUERY = `*[
   _type == "poem"
@@ -27,12 +28,12 @@ export default async function IndexPage() {
   );
 
   return (
-    <div className="mx-auto w-full p-12" key="poetry-links">
+    <div className="mx-auto md:w-full md:pt-6 lg:pt-12" key="poetry-links">
       <hr />
       {Object.entries(groupedPoems).map(([year, poems]) => (
         <div key={year}>
-          <div className="flex space-x-24 p-12">
-            <h2 className="text-3xl font-medium font-ebGaramond">{year}</h2>
+          <div className="flex space-x-12 md:space-x-24 p-6 md:p-12">
+            <Header type="3">{year}</Header>
             <ul className="space-y-6">
               {poems.map((poem) => (
                 <PoemLink poem={poem} key={poem._id} />
@@ -48,13 +49,13 @@ export default async function IndexPage() {
 
 const PoemLink = ({ poem }: { poem: SanityDocument }) => {
   return (
-    <li className="text-lg hover:text-red-800">
+    <li className="hover:text-red-800">
       <Link href={`/poetry/${poem.slug.current}`}>
         {Array.isArray(poem.body) && (
           <PortableText
             key={poem._id}
             value={poem.title}
-            components={haikuTitleComponents}
+            components={sanityTextsComponents}
           />
         )}
       </Link>
