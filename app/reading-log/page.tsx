@@ -46,7 +46,10 @@ const BookCard = ({ readingLog }: { readingLog: SanityDocument }) => {
       <ConditionalWrap
         condition={readingLog.slug}
         wrapper={(children) => (
-          <Link href={`reading-log/${readingLog.slug.current}`}>
+          <Link
+            href={`reading-log/${readingLog.slug.current}`}
+            className="cursor-pointer"
+          >
             {children}
           </Link>
         )}

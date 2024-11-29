@@ -1,80 +1,51 @@
-import Link from "next/link";
-import { type SanityDocument } from "next-sanity";
+"use client";
 
+import { useEffect, useState, use } from "react";
+import { PortableText, type SanityDocument } from "next-sanity";
 import { client } from "@/sanity/client";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import imageUrlBuilder from "@sanity/image-url";
-import ConditionalWrap from "@/components/ConditionalWrap";
+import { sanityBlogComponents } from "@/components/sanity/sanityBlogComponents";
+import LoadingScreen from "@/components/shared/LoadingScreen";
+import BlogContainer from "@/components/shared/BlogContainer";
 
-const POETS_QUERY = `*[
-  _type == "readingLog" && defined(slug.current)
-] | order(publishedAt desc)`;
+const POST_QUERY = `*[_type == "readingLog" && slug.current == $slug][0]`;
 
-const { projectId, dataset } = client.config();
-const urlFor = (source: SanityImageSource) =>
-  projectId && dataset
-    ? imageUrlBuilder({ projectId, dataset }).image(source)
-    : null;
-
-const options = { next: { revalidate: 30 } };
-
-interface ReadingLog extends SanityDocument {
-  slug: { current: string };
-  poet: string;
-  image?: SanityImageSource;
+interface Params {
+  slug: string;
 }
 
-export default async function IndexPage() {
-  const readingLogs = await client.fetch<ReadingLog[]>(
-    POETS_QUERY,
-    {},
-    options
-  );
+export default function PostPage({ params }: { params: Params }) {
+  const { slug } = use<Params>(params);
+  const [readingLog, setreadingLog] = useState<SanityDocument | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  if (!readingLogs || readingLogs.length === 0) {
-    return <p>No reading logs found.</p>;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await client.fetch(POST_QUERY, { slug });
+        setreadingLog(data);
+      } catch (err) {
+        console.error("Error fetching post data:", err);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [slug]);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  if (error || !readingLog) {
+    return <p>Post not found</p>;
   }
 
   return (
-    <div>
-      <ul className="grid grid-cols-6 gap-4">
-        {readingLogs.map((readingLog) => (
-          <BookCard readingLog={readingLog} key={readingLog._id} />
-        ))}
-      </ul>
-    </div>
+    <BlogContainer>
+      <PortableText value={readingLog.memo} components={sanityBlogComponents} />
+    </BlogContainer>
   );
 }
-
-const BookCard = ({ readingLog }: { readingLog: ReadingLog }) => {
-  const readingLogImageUrl = readingLog.image
-    ? urlFor(readingLog.image)?.width(150).height(200).url()
-    : null;
-
-  return (
-    <li>
-      <ConditionalWrap
-        condition={!!readingLog.slug.current}
-        wrapper={(children) => (
-          <Link href={`/poet-of-the-month/${readingLog.slug.current}`}>
-            {children}
-          </Link>
-        )}
-      >
-        {readingLogImageUrl ? (
-          <img
-            src={readingLogImageUrl}
-            alt={readingLog.poet}
-            width="150"
-            height="300"
-            className="object-cover"
-          />
-        ) : (
-          <div className="w-[150px] h-[300px] bg-gray-200 flex items-center justify-center text-sm">
-            No Image
-          </div>
-        )}
-      </ConditionalWrap>
-    </li>
-  );
-};

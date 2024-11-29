@@ -55,7 +55,6 @@ const NavigationMenu: React.FC<{ orientation: "horizontal" | "vertical" }> = ({
   orientation,
 }) => {
   const pathname = usePathname();
-  const currentPathname = pathname.split("/").pop();
   return (
     <nav
       className={
