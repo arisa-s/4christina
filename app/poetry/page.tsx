@@ -27,10 +27,19 @@ export default async function IndexPage() {
     {}
   );
 
+  // Sort the grouped poems by year in descending order
+  const sortedGroupedPoems = Object.entries(groupedPoems).sort(
+    ([yearA], [yearB]) => {
+      const numA = yearA === "Unknown Year" ? -Infinity : parseInt(yearA, 10);
+      const numB = yearB === "Unknown Year" ? -Infinity : parseInt(yearB, 10);
+      return numB - numA;
+    }
+  );
+
   return (
     <div className="mx-auto md:w-full md:pt-6 lg:pt-12" key="poetry-links">
       <hr />
-      {Object.entries(groupedPoems).map(([year, poems]) => (
+      {sortedGroupedPoems.map(([year, poems]) => (
         <div key={year}>
           <div className="flex space-x-12 md:space-x-24 p-6 md:p-12">
             <Header type="3">{year}</Header>
