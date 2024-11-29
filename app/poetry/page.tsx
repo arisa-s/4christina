@@ -41,7 +41,7 @@ export default async function IndexPage() {
       <hr />
       {sortedGroupedPoems.map(([year, poems]) => (
         <div key={year}>
-          <div className="flex space-x-4 md:space-x-24 py-4 md:p-12">
+          <div className="flex space-x-6 md:space-x-24 py-4 md:p-12">
             <Header type="3">{year}</Header>
             <ul className="space-y-6">
               {poems.map((poem) => (
