@@ -1,8 +1,9 @@
 "use client";
 
-import { FC, useState, useRef } from "react";
+import { FC, useEffect, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
-
+import LoadingScreen from "./LoadingScreen";
+import { useSsrSafeResponsive } from "@/util/useResponsive";
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 export interface PDFViewerProps {
@@ -10,36 +11,146 @@ export interface PDFViewerProps {
 }
 
 export const PDFViewer: FC<PDFViewerProps> = ({ fileUrl }) => {
-  const [numPages, setNumPages] = useState<number>();
-  const [pageNumber, setPageNumber] = useState<number>(1);
-  const [scale, setScale] = useState<number>(5);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const window = useSsrSafeResponsive();
 
-  function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
-    setNumPages(numPages);
-  }
+  const [scale, setScale] = useState(1.0);
 
-  function onPageLoadSuccess(pdfPage: any): void {
-    if (containerRef.current) {
-      const containerWidth = containerRef.current.offsetWidth;
-      const viewport = pdfPage.getViewport({ scale: 1 });
-      const calculatedScale = containerWidth / viewport.width;
-      setScale(calculatedScale);
+  useEffect(() => {
+    if (window) {
+      if (window["lg"]) {
+        setScale(1.2);
+      } else if (window["md"]) {
+        setScale(1.0);
+      } else {
+        setScale(0.5);
+      }
     }
+  }, [window]);
+
+  const [numPages, setNumPages] = useState<number | null>(null);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+
+  function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
+    setNumPages(numPages);
+    setIsLoading(false);
   }
+
+  const isFirstPage = pageNumber === 1;
+  const isLastPage = pageNumber === numPages;
+
+  const goToPreviousPage = () => {
+    if (!isFirstPage) setPageNumber(pageNumber - 1);
+  };
+  const goToNextPage = () => {
+    if (!isLastPage) setPageNumber(pageNumber + 1);
+  };
+
+  const zoomIn = () => {
+    setScale((prevScale) => Math.min(prevScale + 0.25, 3.0)); // Limit zoom to 3x
+  };
+
+  const zoomOut = () => {
+    setScale((prevScale) => Math.max(prevScale - 0.25, 0.5)); // Limit zoom to 0.5x
+  };
 
   return (
-    <div ref={containerRef} style={{ width: "100%", overflow: "auto" }}>
+    <section
+      id="pdf-section"
+      className="d-flex flex-column align-items-center justify-items-center w-100"
+    >
+      <div
+        className={`flex space-x-6 mb-4 py-2 px-6 rounded-full bg-secondary-bg`}
+      >
+        <button
+          onClick={goToPreviousPage}
+          className="cursor-pointer"
+          disabled={isFirstPage}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="bi bi-chevron-down text-stone-500 hover:text-stone-900"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fillRule="evenodd"
+              d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
+            />
+          </svg>
+        </button>
+        <label className="text-sm">
+          Page {pageNumber}/{numPages}
+        </label>
+        <button onClick={goToNextPage} disabled={isLastPage}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="bi bi-chevron-up text-stone-500 hover:text-stone-900"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fillRule="evenodd"
+              d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z"
+            />
+          </svg>
+        </button>
+        <div className="flex space-x-2">
+          <button onClick={zoomOut} className="text-sm">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11M13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0"
+              />
+              <path d="M10.344 11.742q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1 6.5 6.5 0 0 1-1.398 1.4z" />
+              <path
+                fill-rule="evenodd"
+                d="M3 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5"
+              />
+            </svg>
+          </button>
+          <button onClick={zoomIn} className="text-sm">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11M13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0"
+              />
+              <path d="M10.344 11.742q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1 6.5 6.5 0 0 1-1.398 1.4z" />
+              <path
+                fill-rule="evenodd"
+                d="M6.5 3a.5.5 0 0 1 .5.5V6h2.5a.5.5 0 0 1 0 1H7v2.5a.5.5 0 0 1-1 0V7H3.5a.5.5 0 0 1 0-1H6V3.5a.5.5 0 0 1 .5-.5"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      {isLoading && <LoadingScreen />}
       <Document file={fileUrl} onLoadSuccess={onDocumentLoadSuccess}>
         <Page
           pageNumber={pageNumber}
           renderTextLayer={false}
           renderAnnotationLayer={false}
-          onLoadSuccess={onPageLoadSuccess}
-          scale={scale}
+          scale={scale} // Dynamically scale the page
+          renderMode="canvas" // Ensure high-quality rendering
         />
       </Document>
-    </div>
+    </section>
   );
 };
 

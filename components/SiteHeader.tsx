@@ -128,13 +128,15 @@ const MobileHeader: React.FC = () => {
           />
         </svg>
       </button>
-      <animated.div
-        style={menuAnimation}
-        ref={ref}
-        className="absolute top-16 left-0 w-full bg-primary-bg lg:hidden"
-      >
-        <NavigationMenu orientation="vertical" />
-      </animated.div>
+      {menuOpen ? (
+        <animated.div
+          style={menuAnimation}
+          ref={ref}
+          className="absolute top-16 left-0 w-full bg-primary-bg lg:hidden"
+        >
+          <NavigationMenu orientation="vertical" />
+        </animated.div>
+      ) : null}
     </div>
   );
 };

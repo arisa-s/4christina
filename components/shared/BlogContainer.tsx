@@ -6,7 +6,7 @@ export interface BlogContainerProps {
 
 export const BlogContainer: FC<BlogContainerProps> = ({ children }) => {
   return (
-    <article className="min-h-screen max-w-3xl mx-auto md:pt-6 lg:pt-12 space-y-6">
+    <article className="min-h-screen w-full max-w-3xl mx-auto md:pt-6 lg:pt-12 space-y-6">
       {children}
     </article>
   );

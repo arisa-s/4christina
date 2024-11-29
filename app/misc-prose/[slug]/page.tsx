@@ -5,6 +5,7 @@ import { PortableText, type SanityDocument } from "next-sanity";
 import { client } from "@/sanity/client";
 import { sanityBlogComponents } from "@/components/sanity/sanityBlogComponents";
 import LoadingScreen from "@/components/shared/LoadingScreen";
+import BlogContainer from "@/components/shared/BlogContainer";
 
 const POST_QUERY = `*[_type == "miscProse" && slug.current == $slug][0]`;
 
@@ -43,8 +44,8 @@ export default function PostPage({ params }: { params: Params }) {
   }
 
   return (
-    <article className="container mx-auto min-h-screen max-w-3xl p-8 flex flex-col gap-4">
+    <BlogContainer>
       <PortableText value={miscProse.body} components={sanityBlogComponents} />
-    </article>
+    </BlogContainer>
   );
 }
