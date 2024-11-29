@@ -59,7 +59,7 @@ export const PDFViewer: FC<PDFViewerProps> = ({ fileUrl }) => {
       id="pdf-section"
       className="d-flex flex-column align-items-center justify-items-center w-100"
     >
-      <div className={`mb-4 py-2 px-6 rounded-full bg-secondary-bg`}>
+      <div className={`flex mb-4 py-2 px-6 rounded-full bg-secondary-bg`}>
         <div className="flex space-x-6 mx-auto">
           <button
             onClick={goToPreviousPage}
