@@ -31,6 +31,7 @@ export function AutoplayVideo({
         autoPlay
         loop
         muted
+        playsInline
         className={className}
       >
         <source src={src} type={type} />
