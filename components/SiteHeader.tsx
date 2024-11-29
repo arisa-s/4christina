@@ -65,9 +65,9 @@ const NavigationMenu: React.FC<{ orientation: "horizontal" | "vertical" }> = ({
       }
     >
       {LINKS.map(({ href, label }) => {
-        if (orientation === "vertical" && href === currentPathname) return null;
+        if (orientation === "vertical" && href === pathname) return null;
         return (
-          <NavLink key={href} href={href} selected={currentPathname == href}>
+          <NavLink key={href} href={href} selected={pathname == href}>
             {label}
           </NavLink>
         );
