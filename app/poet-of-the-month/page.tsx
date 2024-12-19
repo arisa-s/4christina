@@ -2,21 +2,15 @@ import Link from "next/link";
 import { type SanityDocument } from "next-sanity";
 
 import { client } from "@/sanity/client";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import imageUrlBuilder from "@sanity/image-url";
 import CardHeader from "@/components/shared/CardHeader";
 import CardTag from "@/components/shared/CardTag";
+import Image from "next/image";
+import { decodeAssetId, urlFor } from "@/sanity/image";
 
 const POETS_QUERY = `*[
   _type == "poetOfTheMonth"
   && defined(slug.current)
 ]|order(publishedAt desc)`;
-
-const { projectId, dataset } = client.config();
-const urlFor = (source: SanityImageSource) =>
-  projectId && dataset
-    ? imageUrlBuilder({ projectId, dataset }).image(source)
-    : null;
 
 const options = { next: { revalidate: 30 } };
 
@@ -43,12 +37,21 @@ const PoetCard = ({ poetOfTheMonth }: { poetOfTheMonth: SanityDocument }) => {
     ? urlFor(poetOfTheMonth.image)?.url()
     : null;
 
+  const {
+    dimensions: { width, height },
+  } = decodeAssetId(poetOfTheMonth.image.asset._ref);
+
   return (
     <li>
       <Link href={`poet-of-the-month/${poetOfTheMonth.slug.current}`}>
         <div className="space-y-2">
           {poetOfTheMonthImageUrl && (
-            <img src={poetOfTheMonthImageUrl} alt={poetOfTheMonth.poet} />
+            <Image
+              src={poetOfTheMonthImageUrl}
+              alt={poetOfTheMonth.poet}
+              width={width}
+              height={height}
+            />
           )}
           <div>
             <CardTag>{poetOfTheMonth.month}</CardTag>

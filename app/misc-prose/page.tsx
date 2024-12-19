@@ -7,6 +7,8 @@ import imageUrlBuilder from "@sanity/image-url";
 import CardHeader from "@/components/shared/CardHeader";
 import CardTag from "@/components/shared/CardTag";
 import Paragraph from "@/components/shared/Paragraph";
+import Image from "next/image";
+import { decodeAssetId } from "@/sanity/image";
 
 const MISCS_QUERY = `*[
   _type == "miscProse"
@@ -42,15 +44,21 @@ const PostCard = ({ miscProse }: { miscProse: SanityDocument }) => {
     ? urlFor(miscProse.image)?.url()
     : null;
 
+  const {
+    dimensions: { width, height },
+  } = decodeAssetId(miscProse.image.asset._ref);
+
   return (
     <li>
       <Link href={`/misc-prose/${miscProse.slug.current}`}>
         <div className="space-y-2">
           {miscProseImageUrl && (
-            <img
+            <Image
               src={miscProseImageUrl}
               alt={miscProse.poet}
               className="w-full"
+              width={width}
+              height={height}
             />
           )}
           <div>

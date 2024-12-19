@@ -2,9 +2,6 @@ import { PortableText, type SanityDocument } from "next-sanity";
 
 import { client } from "@/sanity/client";
 import { haikuComponents } from "@/components/sanity/haikuComponents";
-import Header from "@/components/shared/Header";
-import Paragraph from "@/components/shared/Paragraph";
-import BlogContainer from "@/components/shared/BlogContainer";
 import Link from "../../components/shared/Link";
 
 const HAIKUS_QUERY = `*[

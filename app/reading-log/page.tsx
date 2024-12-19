@@ -2,19 +2,13 @@ import Link from "next/link";
 import { type SanityDocument } from "next-sanity";
 
 import { client } from "@/sanity/client";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import imageUrlBuilder from "@sanity/image-url";
 import ConditionalWrap from "@/components/ConditionalWrap";
+import Image from "next/image";
+import { decodeAssetId, urlFor } from "@/sanity/image";
 
 const POETS_QUERY = `*[
   _type == "readingLog"
 ]|order(publishedAt desc)`;
-
-const { projectId, dataset } = client.config();
-const urlFor = (source: SanityImageSource) =>
-  projectId && dataset
-    ? imageUrlBuilder({ projectId, dataset }).image(source)
-    : null;
 
 const options = { next: { revalidate: 30 } };
 
@@ -41,6 +35,10 @@ const BookCard = ({ readingLog }: { readingLog: SanityDocument }) => {
     ? urlFor(readingLog.image)?.width(300).height(400).url()
     : null;
 
+  const {
+    dimensions: { width, height },
+  } = decodeAssetId(readingLog.image.asset._ref);
+
   return (
     <li>
       <ConditionalWrap
@@ -54,7 +52,12 @@ const BookCard = ({ readingLog }: { readingLog: SanityDocument }) => {
           </Link>
         )}
       >
-        <img src={readingLogImageUrl!} alt={readingLog.poet} />
+        <Image
+          src={readingLogImageUrl!}
+          alt={readingLog.poet}
+          width={width}
+          height={height}
+        />
       </ConditionalWrap>
     </li>
   );
