@@ -3,9 +3,9 @@
 import { useEffect, useState, use } from "react";
 import { PortableText, type SanityDocument } from "next-sanity";
 import { client } from "@/sanity/client";
-import { sanityBlogComponents } from "@/components/sanity/sanityBlogComponents";
 import LoadingScreen from "@/components/shared/LoadingScreen";
 import BlogContainer from "@/components/shared/BlogContainer";
+import { sanityPoetryComponents } from "@/components/sanity/sanityPoetryComponent";
 
 const POST_QUERY = `*[_type == "poem" && slug.current == $slug][0]`;
 
@@ -45,7 +45,7 @@ export default function PostPage({ params }: { params: Params }) {
 
   return (
     <BlogContainer>
-      <PortableText value={poem.body} components={sanityBlogComponents} />
+      <PortableText value={poem.body} components={sanityPoetryComponents} />
     </BlogContainer>
   );
 }

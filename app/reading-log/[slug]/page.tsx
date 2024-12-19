@@ -1,47 +1,27 @@
-"use client";
-
-import { useEffect, useState, use } from "react";
 import { PortableText, type SanityDocument } from "next-sanity";
 import { client } from "@/sanity/client";
 import { sanityBlogComponents } from "@/components/sanity/sanityBlogComponents";
-import LoadingScreen from "@/components/shared/LoadingScreen";
 import BlogContainer from "@/components/shared/BlogContainer";
 
 const POST_QUERY = `*[_type == "readingLog" && slug.current == $slug][0]`;
+const POST_SLUGS_QUERY = `*[
+  _type == "readingLog" && defined(slug.current)
+]|order(publishedAt desc){_id, slug}`;
 
 interface Params {
   slug: string;
 }
 
-export default function PostPage({ params }: { params: Params }) {
-  const { slug } = use<Params>(params);
-  const [readingLog, setreadingLog] = useState<SanityDocument | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+// export async function generateStaticParams() {
+//   const posts = await client.fetch(POST_SLUGS_QUERY);
+//   return posts.map((post: SanityDocument) => ({
+//     slug: post.slug.current,
+//   }));
+// }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await client.fetch(POST_QUERY, { slug });
-        setreadingLog(data);
-      } catch (err) {
-        console.error("Error fetching post data:", err);
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [slug]);
-
-  if (loading) {
-    return <LoadingScreen />;
-  }
-
-  if (error || !readingLog) {
-    return <p>Post not found</p>;
-  }
+export default async function PostPage({ params }: { params: Params }) {
+  const { slug } = await params;
+  const readingLog = await client.fetch(POST_QUERY, { slug });
 
   return (
     <BlogContainer>
