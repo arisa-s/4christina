@@ -32,7 +32,7 @@ export function AutoplayVideo({
         loop
         muted
         playsInline
-        className={`object-cover" ${className}`}
+        className={`object-cover ${className}`}
       >
         <source src={src} type={type} />
         Your browser does not support the video tag.
