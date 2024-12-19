@@ -151,7 +151,13 @@ const ImageLink = ({
   return (
     <div>
       <Link href={href}>
-        <Image src={src} alt={alt} className={className} style={style} />
+        <Image
+          src={src}
+          alt={alt}
+          className={className}
+          style={style}
+          priority
+        />
       </Link>
     </div>
   );
