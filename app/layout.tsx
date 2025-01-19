@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { EB_Garamond, Nunito_Sans } from "next/font/google";
 import SiteHeader from "@/components/SiteHeader";
+import "core-js/proposals/promise-with-resolvers";
 
 const nunitoSans = Nunito_Sans({
   subsets: ["latin"],

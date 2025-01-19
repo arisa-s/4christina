@@ -4,11 +4,26 @@ import { FC, useEffect, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import LoadingScreen from "./LoadingScreen";
 import { useSsrSafeResponsive } from "@/util/useResponsive";
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
-
 export interface PDFViewerProps {
   fileUrl: string;
 }
+if (typeof Promise.withResolvers === "undefined") {
+  if (window)
+    // @ts-expect-error This does not exist outside of polyfill which this is doing
+    window.Promise.withResolvers = function () {
+      let resolve, reject;
+      const promise = new Promise((res, rej) => {
+        resolve = res;
+        reject = rej;
+      });
+      return { promise, resolve, reject };
+    };
+}
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  "pdfjs-dist/legacy/build/pdf.worker.min.mjs",
+  import.meta.url
+).toString();
 
 export const PDFViewer: FC<PDFViewerProps> = ({ fileUrl }) => {
   const window = useSsrSafeResponsive();
@@ -108,12 +123,12 @@ export const PDFViewer: FC<PDFViewerProps> = ({ fileUrl }) => {
                 viewBox="0 0 16 16"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11M13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0"
                 />
                 <path d="M10.344 11.742q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1 6.5 6.5 0 0 1-1.398 1.4z" />
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M3 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5"
                 />
               </svg>
@@ -127,12 +142,12 @@ export const PDFViewer: FC<PDFViewerProps> = ({ fileUrl }) => {
                 viewBox="0 0 16 16"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11M13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0"
                 />
                 <path d="M10.344 11.742q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1 6.5 6.5 0 0 1-1.398 1.4z" />
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M6.5 3a.5.5 0 0 1 .5.5V6h2.5a.5.5 0 0 1 0 1H7v2.5a.5.5 0 0 1-1 0V7H3.5a.5.5 0 0 1 0-1H6V3.5a.5.5 0 0 1 .5-.5"
                 />
               </svg>
