@@ -1,7 +1,12 @@
+"use client";
+
 import { AutoplayVideo } from "@/components/shared/AutoplayVideo";
 import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import FadeInOnLoad from "@/components/shared/FadeInOnLoad";
 
-// Image imports
+// Example image imports (adjust paths as needed)
 import home1 from "../public/homePoems/home-1.jpeg";
 import home7 from "../public/homePoems/home-7.png";
 import home11 from "../public/homePoems/home-11.png";
@@ -12,7 +17,7 @@ import home6 from "../public/homePoems/home-6.png";
 import home8 from "../public/homePoems/home-8.png";
 import home10 from "../public/homePoems/home-10.png";
 import home13 from "../public/homePoems/home-13.jpeg";
-import Link from "next/link";
+
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 export default function Home() {
@@ -30,6 +35,8 @@ export default function Home() {
         href="/poetry/fervent-prophecy"
         width={396}
         height={924}
+        // If it's a .mov, remove or change the type:
+        // type="video/quicktime"
         className="ml-4 md:ml-0 w-3/5 md:w-1/2 cursor-pointer"
       />
       <ImageLink
@@ -58,9 +65,10 @@ export default function Home() {
       {/* Col 2 (desktop) */}
       <AutoplayVideo
         src="/homePoems/home-2.mp4"
-        href={"/poetry/atomic-olive"}
+        href="/poetry/atomic-olive"
         width={1330}
         height={1836}
+        type="video/mp4"
         className="w-full md:-ml-24 cursor-pointer"
       />
       {/* Col 2 (mobile) */}
@@ -135,7 +143,8 @@ export default function Home() {
   );
 }
 
-const ImageLink = ({
+// Helper component for images
+function ImageLink({
   src,
   alt,
   href,
@@ -147,18 +156,21 @@ const ImageLink = ({
   href: string;
   className?: string;
   style?: React.CSSProperties;
-}) => {
+}) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   return (
-    <div>
+    <FadeInOnLoad isLoaded={isLoaded}>
       <Link href={href}>
         <Image
           src={src}
           alt={alt}
           className={className}
           style={style}
+          onLoadingComplete={() => setIsLoaded(true)}
           priority
         />
       </Link>
-    </div>
+    </FadeInOnLoad>
   );
-};
+}
