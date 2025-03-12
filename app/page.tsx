@@ -1,10 +1,6 @@
-"use client";
-
 import { AutoplayVideo } from "@/components/shared/AutoplayVideo";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import FadeInOnLoad from "@/components/shared/FadeInOnLoad";
 
 // Example image imports (adjust paths as needed)
 import home1 from "../public/homePoems/home-1.jpeg";
@@ -157,20 +153,17 @@ function ImageLink({
   className?: string;
   style?: React.CSSProperties;
 }) {
-  const [isLoaded, setIsLoaded] = useState(false);
-
   return (
-    <FadeInOnLoad isLoaded={isLoaded}>
+    <div>
       <Link href={href}>
         <Image
           src={src}
           alt={alt}
           className={className}
           style={style}
-          onLoadingComplete={() => setIsLoaded(true)}
           priority
         />
       </Link>
-    </FadeInOnLoad>
+    </div>
   );
 }
