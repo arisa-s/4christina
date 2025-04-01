@@ -3,16 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 
 // Example image imports (adjust paths as needed)
-import home1 from "../public/homePoems/home-1.jpeg";
-import home7 from "../public/homePoems/home-7.png";
-import home11 from "../public/homePoems/home-11.png";
-import home12 from "../public/homePoems/home-12.jpeg";
-import home15 from "../public/homePoems/home-15.png";
-import home3 from "../public/homePoems/home-3.png";
-import home6 from "../public/homePoems/home-6.png";
-import home8 from "../public/homePoems/home-8.png";
-import home10 from "../public/homePoems/home-10.png";
-import home13 from "../public/homePoems/home-13.jpeg";
+import home1 from "../../public/homePoems/home-1.jpeg";
+import home7 from "../../public/homePoems/home-7.png";
+import home11 from "../../public/homePoems/home-11.png";
+import home12 from "../../public/homePoems/home-12.jpeg";
+import home15 from "../../public/homePoems/home-15.png";
+import home3 from "../../public/homePoems/home-3.png";
+import home6 from "../../public/homePoems/home-6.png";
+import home8 from "../../public/homePoems/home-8.png";
+import home10 from "../../public/homePoems/home-10.png";
+import home13 from "../../public/homePoems/home-13.jpeg";
 
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
