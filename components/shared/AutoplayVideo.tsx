@@ -1,9 +1,5 @@
-"use client";
-
 import Link from "next/link";
-import { useState } from "react";
 import FadeInOnLoad from "./FadeInOnLoad";
-import ConditionalWrap from "./ConditionalWrap";
 
 export function AutoplayVideo({
   src,
@@ -20,13 +16,6 @@ export function AutoplayVideo({
   className?: string;
   href?: string;
 }) {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  const handleLoadedData = () => {
-    // Called when enough data is available to play
-    setIsLoaded(true);
-  };
-
   // The <video> itself:
   const videoElement = (
     <FadeInOnLoad isLoaded={true}>
@@ -38,7 +27,6 @@ export function AutoplayVideo({
         muted
         playsInline
         className={`object-cover ${className ?? ""}`}
-        onLoadedData={handleLoadedData}
       >
         {
           // If using .mov files, you may want to remove "type" or set to "video/quicktime"
@@ -50,17 +38,11 @@ export function AutoplayVideo({
     </FadeInOnLoad>
   );
 
-  // If an `href` is passed, wrap the video in a link
+  if (!href) return videoElement;
+
   return (
-    <ConditionalWrap
-      condition={!!href}
-      wrapper={(children) => (
-        <div>
-          <Link href={href!}>{children}</Link>
-        </div>
-      )}
-    >
-      {videoElement}
-    </ConditionalWrap>
+    <div className={`w-${width} h-${height}`}>
+      <Link href={href}>{videoElement}</Link>
+    </div>
   );
 }

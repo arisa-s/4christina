@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 interface ConditionalWrapProps {
@@ -10,5 +12,10 @@ const ConditionalWrap: React.FC<ConditionalWrapProps> = ({
   condition,
   wrapper,
   children,
-}) => (condition ? wrapper(children) : children);
+}) => {
+  if (!condition) return children;
+
+  return wrapper(children);
+};
+
 export default ConditionalWrap;
