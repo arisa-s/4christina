@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { EB_Garamond, Nunito_Sans } from "next/font/google";
-import SiteHeader from "@/components/SiteHeader";
 import "core-js/proposals/promise-with-resolvers";
 
 const nunitoSans = Nunito_Sans({
@@ -33,12 +32,7 @@ export default function RootLayout({
           (nunitoSans.variable, ebGaramond.variable)
         } bg-primary-bg`}
       >
-        <SiteHeader />
-        <div className="max-w-7xl mx-auto grid grid-rows-[20px_1fr_20px] min-h-screen p-6 pb-20 gap-16">
-          <main className="flex flex-col row-start-2 items-center sm:items-start">
-            {children}
-          </main>
-        </div>
+        {children}
       </body>
     </html>
   );
