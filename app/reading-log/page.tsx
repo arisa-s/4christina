@@ -2,7 +2,6 @@ import Link from "next/link";
 import { type SanityDocument } from "next-sanity";
 
 import { client } from "@/sanity/client";
-import ConditionalWrap from "@/components/ConditionalWrap";
 import Image from "next/image";
 import { decodeAssetId, urlFor } from "@/sanity/image";
 
@@ -31,34 +30,43 @@ export default async function IndexPage() {
 }
 
 const BookCard = ({ readingLog }: { readingLog: SanityDocument }) => {
-  const readingLogImageUrl = readingLog.image
-    ? urlFor(readingLog.image)?.width(300).height(400).url()
-    : null;
+  const getImageUrl = () => {
+    if (!readingLog.image) return null;
+    try {
+      return urlFor(readingLog.image)?.width(300).height(400).url();
+    } catch (error) {
+      console.error(error);
+      console.log(readingLog);
+      return null;
+    }
+  };
+  const readingLogImageUrl = getImageUrl();
 
   const {
     dimensions: { width, height },
-  } = decodeAssetId(readingLog.image.asset._ref);
+  } = readingLogImageUrl
+    ? decodeAssetId(readingLog.image.asset._ref)
+    : { dimensions: { width: 0, height: 0 } };
+
+  const imageElement = (
+    <Image
+      src={readingLogImageUrl!}
+      width={width}
+      height={height}
+      alt={readingLog.title || "book cover"}
+    />
+  );
+
+  if (!readingLog.slug) return imageElement;
 
   return (
     <li>
-      <ConditionalWrap
-        condition={readingLog.slug}
-        wrapper={(children) => (
-          <Link
-            href={`reading-log/${readingLog.slug.current}`}
-            className="cursor-pointer"
-          >
-            {children}
-          </Link>
-        )}
+      <Link
+        href={`reading-log/${readingLog.slug.current}`}
+        className="cursor-pointer"
       >
-        <Image
-          src={readingLogImageUrl!}
-          alt={readingLog.poet}
-          width={width}
-          height={height}
-        />
-      </ConditionalWrap>
+        {imageElement}
+      </Link>
     </li>
   );
 };
