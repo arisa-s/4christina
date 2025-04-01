@@ -40,27 +40,12 @@ export default async function IndexPage() {
 }
 
 const PostCard = ({ miscProse }: { miscProse: SanityDocument }) => {
-  const miscProseImageUrl = miscProse.image
-    ? urlFor(miscProse.image)?.url()
-    : null;
-
-  const {
-    dimensions: { width, height },
-  } = decodeAssetId(miscProse.image.asset._ref);
-
   return (
     <li>
       <Link href={`/misc-prose/${miscProse.slug.current}`}>
         <div className="space-y-2">
-          {miscProseImageUrl && (
-            <Image
-              src={miscProseImageUrl}
-              alt={miscProse.poet}
-              className="w-full"
-              width={width}
-              height={height}
-            />
-          )}
+          {miscProse.image ? <></> : null}
+          {miscProse.image && <MiscProseImage miscProse={miscProse} />}
           <div>
             {miscProse.title && <CardTag>{miscProse.tag}</CardTag>}
             <CardHeader>{miscProse.title}</CardHeader>
@@ -71,5 +56,21 @@ const PostCard = ({ miscProse }: { miscProse: SanityDocument }) => {
         </div>
       </Link>
     </li>
+  );
+};
+
+const MiscProseImage = ({ miscProse }: { miscProse: SanityDocument }) => {
+  const miscProseImageUrl = urlFor(miscProse.image)!.url();
+  const {
+    dimensions: { width, height },
+  } = decodeAssetId(miscProse.image.asset._ref);
+  return (
+    <Image
+      src={miscProseImageUrl}
+      alt={miscProse.poet || miscProse.title}
+      className="w-full"
+      width={width}
+      height={height}
+    />
   );
 };

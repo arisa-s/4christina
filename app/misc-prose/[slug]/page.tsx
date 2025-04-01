@@ -1,12 +1,9 @@
-import { PortableText, type SanityDocument } from "next-sanity";
+import { PortableText } from "next-sanity";
 import { client } from "@/sanity/client";
 import { sanityBlogComponents } from "@/components/sanity/sanityBlogComponents";
 import BlogContainer from "@/components/shared/BlogContainer";
 
 const POST_QUERY = `*[_type == "miscProse" && slug.current == $slug][0]`;
-const POST_SLUGS_QUERY = `*[
-  _type == "miscProse" && defined(slug.current)
-]|order(publishedAt desc){_id, slug}`;
 
 interface Params {
   slug: string;
