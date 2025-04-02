@@ -58,7 +58,7 @@ export function BlogPage({ slug, query, title }: BlogPageProps) {
 
   return (
     <BlogContainer>
-      <article className="prose prose-lg max-w-none">
+      <article className="prose prose-lg max-w-none space-y-4">
         {title && <h1 className="text-3xl font-bold mb-4">{title}</h1>}
         <PortableText value={content.body} components={sanityBlogComponents} />
       </article>

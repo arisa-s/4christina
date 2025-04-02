@@ -3,8 +3,9 @@ import { type SanityDocument } from "next-sanity";
 
 import { sanityFetch } from "@/sanity/fetch";
 import { listReadingLog } from "@/sanity/queries/readingLog";
-import { DimensionAdjustedImage } from "@/components/shared/DimensionAdjustedImage";
 import { FadeInView } from "@/components/shared/FadeInView";
+import { Image } from "next-sanity/image";
+import { urlFor } from "@/sanity/lib/image";
 
 export default async function IndexPage() {
   const readingLogs = await sanityFetch({ query: listReadingLog });
@@ -24,10 +25,12 @@ export default async function IndexPage() {
 
 const BookCard = ({ readingLog }: { readingLog: SanityDocument }) => {
   const imageElement = readingLog.image ? (
-    <DimensionAdjustedImage
-      image={readingLog.image}
+    <Image
+      src={urlFor(readingLog.image)!.url()}
       alt={readingLog.title || "book cover"}
       className="w-full h-full object-cover"
+      width={300}
+      height={450}
     />
   ) : (
     <div>{readingLog.title}</div>

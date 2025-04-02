@@ -47,9 +47,17 @@ export const sanityBlogComponents: Partial<PortableTextReactComponents> = {
     ),
   },
   block: {
-    normal: ({ children }) => <Paragraph type="primary">{children}</Paragraph>,
-    h1: ({ children }) => <Header type="1">{children}</Header>,
-    h2: ({ children }) => <Header type="2">{children}</Header>,
-    h3: ({ children }) => <Header type="3">{children}</Header>,
+    normal: ({ children }) =>
+      children == "" ? (
+        <br />
+      ) : (
+        <Paragraph type="primary">{children}</Paragraph>
+      ),
+    h1: ({ children }) =>
+      children == "" ? <br /> : <Header type="1">{children}</Header>,
+    h2: ({ children }) =>
+      children == "" ? <br /> : <Header type="2">{children}</Header>,
+    h3: ({ children }) =>
+      children == "" ? <br /> : <Header type="3">{children}</Header>,
   },
 };

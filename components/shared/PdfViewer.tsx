@@ -33,9 +33,9 @@ export const PDFViewer: FC<PDFViewerProps> = ({ fileUrl }) => {
   useEffect(() => {
     if (window) {
       if (window["lg"]) {
-        setScale(1.2);
+        setScale(1);
       } else if (window["md"]) {
-        setScale(1.0);
+        setScale(0.8);
       } else {
         setScale(0.5);
       }
@@ -44,11 +44,9 @@ export const PDFViewer: FC<PDFViewerProps> = ({ fileUrl }) => {
 
   const [numPages, setNumPages] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages);
-    setIsLoading(false);
   }
 
   const isFirstPage = pageNumber === 1;
@@ -155,8 +153,11 @@ export const PDFViewer: FC<PDFViewerProps> = ({ fileUrl }) => {
           </div>
         </div>
       </div>
-      {isLoading && <LoadingScreen />}
-      <Document file={fileUrl} onLoadSuccess={onDocumentLoadSuccess}>
+      <Document
+        file={fileUrl}
+        onLoadSuccess={onDocumentLoadSuccess}
+        loading={<LoadingScreen />}
+      >
         <Page
           pageNumber={pageNumber}
           renderTextLayer={false}
