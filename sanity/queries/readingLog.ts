@@ -9,7 +9,7 @@ export const getReadingLogBySlug = defineQuery(`
   `);
 
 export const listReadingLogSlug = defineQuery(`
-    *[_type == "readingLog"] {
+    *[_type == "readingLog" && defined(slug.current)] {
         "slug": slug.current
     }
   `);
