@@ -15,7 +15,7 @@ export default async function IndexPage() {
 
   return (
     <div className="columns-2 md:columns-3 gap-2 md:gap-4 space-y-2 md:space-y-4">
-      <LoadingOverlay overlayKey="inspiration" />
+      <LoadingOverlay overlayKey="inspiration" text="Loading inspirations..." />
       {inspirations.map((inspiration) => {
         if (inspiration.mediaType === "image" && inspiration.image) {
           return (

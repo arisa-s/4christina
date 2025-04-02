@@ -4,7 +4,13 @@ import { useState, useEffect } from "react";
 import { Bars } from "react-loader-spinner";
 
 // Show a loading text for first 2 seconds of page load
-export function LoadingOverlay({ overlayKey }: { overlayKey: string }) {
+export function LoadingOverlay({
+  overlayKey,
+  text,
+}: {
+  overlayKey: string;
+  text?: string;
+}) {
   const [showLoading, setShowLoading] = useState(true);
 
   useEffect(() => {
@@ -17,7 +23,7 @@ export function LoadingOverlay({ overlayKey }: { overlayKey: string }) {
       const timer = setTimeout(() => {
         setShowLoading(false);
         document.body.style.overflow = "unset"; // Restore scrolling
-      }, 3000);
+      }, 5000);
 
       return () => {
         clearTimeout(timer);
@@ -32,7 +38,16 @@ export function LoadingOverlay({ overlayKey }: { overlayKey: string }) {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-surface-primary z-50 bg-white/20 backdrop-blur-sm">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
+      <div className="flex items-center justify-center">
+        <Bars
+          height="20"
+          width="20"
+          color="#FFFFF"
+          ariaLabel="audio-loading"
+          visible={true}
+        />
+        {text && <p className="text-white">{text}</p>}
+      </div>
     </div>
   );
 }
