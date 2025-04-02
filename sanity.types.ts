@@ -475,7 +475,7 @@ export type ListInspirationsResult = Array<{
 
 // Source: ./sanity/queries/miscProse.ts
 // Variable: listMiscProse
-// Query: *[_type == "miscProse"] | order(date desc)
+// Query: *[_type == "miscProse"] | order(date asc)
 export type ListMiscProseResult = Array<{
   _id: string;
   _type: "miscProse";
@@ -714,7 +714,7 @@ export type ListPoetrySlugResult = Array<never>;
 
 // Source: ./sanity/queries/readingLog.ts
 // Variable: listReadingLog
-// Query: *[_type == "readingLog"] | order(publishedAt desc)
+// Query: *[_type == "readingLog"] | order(publishedAt asc)
 export type ListReadingLogResult = Array<{
   _id: string;
   _type: "readingLog";
@@ -831,7 +831,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "\n    *[_type == \"haiku\"] | order(date desc)\n  ": ListHaikuResult;
     "\n    *[_type == \"inspiration\"] | order(publishedAt desc)\n  ": ListInspirationsResult;
-    "\n    *[_type == \"miscProse\"] | order(date desc)\n  ": ListMiscProseResult;
+    "\n    *[_type == \"miscProse\"] | order(date asc)\n  ": ListMiscProseResult;
     "\n    *[_type == \"miscProse\" && slug.current == $slug][0]\n  ": GetMiscProseBySlugResult;
     "\n    *[_type == \"miscProse\"] {\n        \"slug\": slug.current\n    }\n  ": ListMiscProseSlugResult;
     "\n    *[_type == \"poetOfTheMonth\"] | order(publishedAt desc)\n  ": ListPoetOfTheMonthResult;
@@ -840,7 +840,7 @@ declare module "@sanity/client" {
     "\n    *[_type == \"poetry\"] | order(publishedAt desc)\n  ": ListPoetryResult;
     "\n    *[_type == \"poetry\" && slug.current == $slug][0]\n  ": GetPoetryBySlugResult;
     "\n    *[_type == \"poetry\"] {\n        \"slug\": slug.current\n    }\n  ": ListPoetrySlugResult;
-    "\n    *[_type == \"readingLog\"] | order(publishedAt desc)\n  ": ListReadingLogResult;
+    "\n    *[_type == \"readingLog\"] | order(publishedAt asc)\n  ": ListReadingLogResult;
     "\n    *[_type == \"readingLog\" && slug.current == $slug][0]\n  ": GetReadingLogBySlugResult;
     "\n    *[_type == \"readingLog\" && defined(slug.current)] {\n        \"slug\": slug.current\n    }\n  ": ListReadingLogSlugResult;
   }

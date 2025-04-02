@@ -2,9 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useInView } from "framer-motion";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
-import { useRef } from "react";
+import { FadeInView } from "../shared/FadeInView";
 
 export function ImageLink({
   src,
@@ -19,16 +18,8 @@ export function ImageLink({
   className?: string;
   style?: React.CSSProperties;
 }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-    >
+    <FadeInView>
       <div>
         <Link href={href}>
           <Image
@@ -40,6 +31,6 @@ export function ImageLink({
           />
         </Link>
       </div>
-    </motion.div>
+    </FadeInView>
   );
 }

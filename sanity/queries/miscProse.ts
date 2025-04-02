@@ -1,7 +1,7 @@
 import { defineQuery } from "next-sanity";
 
 export const listMiscProse = defineQuery(`
-    *[_type == "miscProse"] | order(date desc)
+    *[_type == "miscProse"] | order(date asc)
   `);
 
 export const getMiscProseBySlug = defineQuery(`

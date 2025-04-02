@@ -11,7 +11,7 @@ export default async function MiscProseListPage() {
   const miscProses = await sanityFetch({ query: listMiscProse });
 
   return (
-    <ul className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 md:pt-6 lg:pt-12">
+    <ul className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-12 lg:gap-36 md:pt-6 lg:pt-12 max-w-6xl mx-auto">
       {miscProses.map((miscProse) => (
         <li key={miscProse._id}>
           <Link href={`/misc-prose/${miscProse.slug.current}`}>

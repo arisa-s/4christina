@@ -4,6 +4,7 @@ import { listInspirations } from "@/sanity/queries/inspiration";
 import { DimensionAdjustedImage } from "@/components/shared/DimensionAdjustedImage";
 import { getFileAsset } from "@sanity/asset-utils";
 import { client } from "@/sanity/lib/client";
+import { FadeInView } from "@/components/shared/FadeInView";
 
 export default async function IndexPage() {
   // Fetch inspirations data from Sanity
@@ -16,12 +17,14 @@ export default async function IndexPage() {
       {inspirations.map((inspiration) => {
         if (inspiration.mediaType === "image" && inspiration.image) {
           return (
-            <DimensionAdjustedImage
-              image={inspiration.image}
-              alt={inspiration.title || "Inspiration media"}
-              className="w-full h-auto"
-              key={inspiration._id}
-            />
+            <FadeInView key={inspiration._id}>
+              <DimensionAdjustedImage
+                image={inspiration.image}
+                alt={inspiration.title || "Inspiration media"}
+                className="w-full h-auto"
+                key={inspiration._id}
+              />
+            </FadeInView>
           );
         }
         if (inspiration.mediaType === "video" && inspiration.video?.asset) {
@@ -31,11 +34,13 @@ export default async function IndexPage() {
           ).url;
 
           return (
-            <AutoplayVideo
-              src={videoUrl}
-              className="w-full h-auto"
-              key={inspiration._id}
-            />
+            <FadeInView key={inspiration._id}>
+              <AutoplayVideo
+                src={videoUrl}
+                className="w-full h-auto"
+                key={inspiration._id}
+              />
+            </FadeInView>
           );
         }
         return null;

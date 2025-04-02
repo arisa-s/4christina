@@ -4,6 +4,7 @@ import { type SanityDocument } from "next-sanity";
 import { sanityFetch } from "@/sanity/fetch";
 import { listReadingLog } from "@/sanity/queries/readingLog";
 import { DimensionAdjustedImage } from "@/components/shared/DimensionAdjustedImage";
+import { FadeInView } from "@/components/shared/FadeInView";
 
 export default async function IndexPage() {
   const readingLogs = await sanityFetch({ query: listReadingLog });
@@ -12,7 +13,9 @@ export default async function IndexPage() {
     <div className="mx-auto md:pt-6 lg:pt-12">
       <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
         {readingLogs.map((readingLog) => (
-          <BookCard readingLog={readingLog} key={readingLog._id} />
+          <FadeInView key={readingLog._id}>
+            <BookCard readingLog={readingLog} key={readingLog._id} />
+          </FadeInView>
         ))}
       </ul>
     </div>

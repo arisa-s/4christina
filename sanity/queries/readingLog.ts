@@ -1,7 +1,7 @@
 import { defineQuery } from "next-sanity";
 
 export const listReadingLog = defineQuery(`
-    *[_type == "readingLog"] | order(publishedAt desc)
+    *[_type == "readingLog"] | order(publishedAt asc)
   `);
 
 export const getReadingLogBySlug = defineQuery(`
