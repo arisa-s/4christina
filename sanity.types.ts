@@ -52,15 +52,6 @@ export type Inspiration = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  media: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-    };
-    _type: "file";
-  };
   image?: {
     asset?: {
       _ref: string;
@@ -457,15 +448,6 @@ export type ListInspirationsResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  media: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-    };
-    _type: "file";
-  };
   image?: {
     asset?: {
       _ref: string;
@@ -838,7 +820,7 @@ export type GetReadingLogBySlugResult = {
   }>;
 } | null;
 // Variable: listReadingLogSlug
-// Query: *[_type == "readingLog"] {        "slug": slug.current    }
+// Query: *[_type == "readingLog" && defined(slug.current)] {        "slug": slug.current    }
 export type ListReadingLogSlugResult = Array<{
   slug: string | null;
 }>;
@@ -860,6 +842,6 @@ declare module "@sanity/client" {
     "\n    *[_type == \"poetry\"] {\n        \"slug\": slug.current\n    }\n  ": ListPoetrySlugResult;
     "\n    *[_type == \"readingLog\"] | order(publishedAt desc)\n  ": ListReadingLogResult;
     "\n    *[_type == \"readingLog\" && slug.current == $slug][0]\n  ": GetReadingLogBySlugResult;
-    "\n    *[_type == \"readingLog\"] {\n        \"slug\": slug.current\n    }\n  ": ListReadingLogSlugResult;
+    "\n    *[_type == \"readingLog\" && defined(slug.current)] {\n        \"slug\": slug.current\n    }\n  ": ListReadingLogSlugResult;
   }
 }
