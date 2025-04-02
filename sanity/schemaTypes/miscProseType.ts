@@ -36,24 +36,8 @@ export const miscProseType = defineType({
     }),
     defineField({
       name: "body",
-      type: "array",
+      type: "body",
       title: "Body",
-      of: [
-        {
-          type: "block",
-        },
-        {
-          type: "image",
-          options: { hotspot: true },
-        },
-        {
-          type: "file",
-          title: "PDF",
-          options: {
-            accept: "application/pdf",
-          },
-        },
-      ],
     }),
   ],
 });

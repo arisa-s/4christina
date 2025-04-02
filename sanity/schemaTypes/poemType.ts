@@ -8,7 +8,7 @@ export const poemType = defineType({
     defineField({
       name: "title",
       type: "array",
-      title: "Body",
+      title: "Title",
       of: [
         {
           type: "block",
@@ -53,21 +53,8 @@ export const poemType = defineType({
     }),
     defineField({
       name: "body",
-      type: "array",
+      type: "body",
       title: "Body",
-      of: [
-        {
-          type: "image",
-          options: { hotspot: true },
-        },
-        {
-          type: "file",
-          title: "PDF",
-          options: {
-            accept: "application/pdf",
-          },
-        },
-      ],
     }),
   ],
 });

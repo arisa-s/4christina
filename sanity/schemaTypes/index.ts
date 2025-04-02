@@ -5,7 +5,7 @@ import { miscProseType } from "./miscProseType";
 import { poetOfTheMonthType } from "./poetOfTheMonthType";
 import { readingLogType } from "./readingLogType";
 import { inspirationType } from "./inspirationType";
-
+import { bodyType } from "./object/bodyType";
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     haikuType,
@@ -14,5 +14,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     poemType,
     readingLogType,
     inspirationType,
+    bodyType,
   ],
 };

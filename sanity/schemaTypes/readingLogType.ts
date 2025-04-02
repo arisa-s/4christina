@@ -1,47 +1,38 @@
-import {defineField, defineType} from 'sanity'
+import { defineField, defineType } from "sanity";
 
 export const readingLogType = defineType({
-  name: 'readingLog',
-  title: 'Reading log',
-  type: 'document',
+  name: "readingLog",
+  title: "Reading log",
+  type: "document",
   fields: [
     defineField({
-      name: 'image',
-      type: 'image',
+      name: "image",
+      type: "image",
       validation: (rule) => rule.required(),
     }),
     defineField({
-        name: 'publishedAt',
-        type: 'datetime',
-        initialValue: () => new Date().toISOString(),
-        validation: (rule) => rule.required(),
-      }),
-    defineField({
-      name: 'title',
-      type: 'string',
+      name: "publishedAt",
+      type: "datetime",
+      initialValue: () => new Date().toISOString(),
+      validation: (rule) => rule.required(),
     }),
     defineField({
-        name: 'author',
-        type: 'string',
-      }),
+      name: "title",
+      type: "string",
+    }),
     defineField({
-        name: 'slug',
-        type: 'slug',
-        options: {source: 'title'},
-      }),
+      name: "author",
+      type: "string",
+    }),
     defineField({
-        name: "memo",
-        type: "array",
-        title: "Memo",
-        of: [
-          {
-            type: "block",
-          },
-          {
-            type: "image",
-            options: { hotspot: true },
-          },
-        ],
-      },),
+      name: "slug",
+      type: "slug",
+      options: { source: "title" },
+    }),
+    defineField({
+      name: "memo",
+      type: "body",
+      title: "Memo",
+    }),
   ],
-})
+});
