@@ -46,6 +46,13 @@ export const miscProseType = defineType({
           type: "image",
           options: { hotspot: true },
         },
+        {
+          type: "file",
+          title: "PDF",
+          options: {
+            accept: "application/pdf",
+          },
+        },
       ],
     }),
   ],

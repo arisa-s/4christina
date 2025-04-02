@@ -1,41 +1,18 @@
-import { PortableText } from "next-sanity";
-import { sanityBlogComponents } from "@/components/sanity/sanityBlogComponents";
-import BlogContainer from "@/components/shared/BlogContainer";
-import { sanityFetch } from "@/sanity/fetch";
-import {
-  getPoetOfTheMonthBySlug,
-  listPoetOfTheMonthSlug,
-} from "@/sanity/queries/poetOfTheMonth";
+"use client";
 
-export default async function PoetPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const { slug } = await params;
-  const poetOfTheMonth = await sanityFetch({
-    query: getPoetOfTheMonthBySlug,
-    params: { slug },
-  });
+import { BlogPage } from "@/components/shared/BlogPage";
+import { getPoetOfTheMonthBySlug } from "@/sanity/queries/poetOfTheMonth";
+import { use } from "react";
 
-  if (!poetOfTheMonth) {
-    return <div>Poet of the month not found</div>;
-  }
-  return (
-    <BlogContainer>
-      {poetOfTheMonth.body ? (
-        <PortableText
-          value={poetOfTheMonth.body}
-          components={sanityBlogComponents}
-        />
-      ) : null}
-    </BlogContainer>
-  );
+interface Params {
+  slug: string;
 }
 
-export async function generateStaticParams() {
-  const poets = await sanityFetch({ query: listPoetOfTheMonthSlug });
-  return poets.map((poet) => ({
-    slug: poet.slug,
-  }));
+export default function PoetOfTheMonthPage({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { slug } = use(params);
+  return <BlogPage slug={slug} query={getPoetOfTheMonthBySlug} />;
 }

@@ -1,19 +1,12 @@
 import Link from "next/link";
 import { PortableText, type SanityDocument } from "next-sanity";
 
-import { client } from "@/sanity/client";
-import Header from "@/components/shared/Header";
 import { sanityTextsComponents } from "@/components/sanity/sanityTextsComponents";
-
-const POEMS_QUERY = `*[
-  _type == "poem"
-  && defined(slug.current)
-]|order(year desc, publishedAt desc)`;
-
-const options = { next: { revalidate: 30 } };
+import { sanityFetch } from "@/sanity/fetch";
+import { listPoetry } from "@/sanity/queries/poetry";
 
 export default async function IndexPage() {
-  const poems = await client.fetch<SanityDocument[]>(POEMS_QUERY, {}, options);
+  const poems = await sanityFetch({ query: listPoetry });
 
   const groupedPoems = poems.reduce(
     (acc: Record<string, SanityDocument[]>, poem) => {

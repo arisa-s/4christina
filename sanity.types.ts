@@ -190,28 +190,6 @@ export type Poem = {
   }>;
 };
 
-export type SanityFileAsset = {
-  _id: string;
-  _type: "sanity.fileAsset";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  originalFilename?: string;
-  label?: string;
-  title?: string;
-  description?: string;
-  altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
-  uploadId?: string;
-  path?: string;
-  url?: string;
-  source?: SanityAssetSourceData;
-};
-
 export type PoetOfTheMonth = {
   _id: string;
   _type: "poetOfTheMonth";
@@ -314,7 +292,38 @@ export type MiscProse = {
     crop?: SanityImageCrop;
     _type: "image";
     _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    _type: "file";
+    _key: string;
   }>;
+};
+
+export type SanityFileAsset = {
+  _id: string;
+  _type: "sanity.fileAsset";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  originalFilename?: string;
+  label?: string;
+  title?: string;
+  description?: string;
+  altText?: string;
+  sha1hash?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+  assetId?: string;
+  uploadId?: string;
+  path?: string;
+  url?: string;
+  source?: SanityAssetSourceData;
 };
 
 export type Slug = {
@@ -407,7 +416,7 @@ export type Haiku = {
   }>;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | Inspiration | ReadingLog | Poem | SanityFileAsset | PoetOfTheMonth | MiscProse | Slug | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Haiku;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | Inspiration | ReadingLog | Poem | PoetOfTheMonth | MiscProse | SanityFileAsset | Slug | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Haiku;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/queries/haiku.ts
 // Variable: listHaiku
@@ -520,6 +529,15 @@ export type ListMiscProseResult = Array<{
       _ref: string;
       _type: "reference";
       _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    _type: "file";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     hotspot?: SanityImageHotspot;
@@ -568,6 +586,15 @@ export type GetMiscProseBySlugResult = {
     }>;
     level?: number;
     _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    _type: "file";
     _key: string;
   } | {
     asset?: {
@@ -703,14 +730,134 @@ export type ListPoetOfTheMonthSlugResult = Array<{
 
 // Source: ./sanity/queries/poetry.ts
 // Variable: listPoetry
-// Query: *[_type == "poetry"] | order(publishedAt desc)
-export type ListPoetryResult = Array<never>;
+// Query: *[_type == "poem"] | order(publishedAt desc)
+export type ListPoetryResult = Array<{
+  _id: string;
+  _type: "poem";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  year?: "2020" | "2021" | "2022" | "2023" | "2024" | "2025" | "2026" | "2027" | "2028" | "2029" | "2030";
+  publishedAt: string;
+  slug: Slug;
+  body?: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    _type: "file";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+    _key: string;
+  }>;
+}>;
 // Variable: getPoetryBySlug
-// Query: *[_type == "poetry" && slug.current == $slug][0]
-export type GetPoetryBySlugResult = null;
+// Query: *[_type == "poem" && slug.current == $slug][0]
+export type GetPoetryBySlugResult = {
+  _id: string;
+  _type: "poem";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  year?: "2020" | "2021" | "2022" | "2023" | "2024" | "2025" | "2026" | "2027" | "2028" | "2029" | "2030";
+  publishedAt: string;
+  slug: Slug;
+  body?: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    _type: "file";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+    _key: string;
+  }>;
+} | null;
 // Variable: listPoetrySlug
-// Query: *[_type == "poetry"] {        "slug": slug.current    }
-export type ListPoetrySlugResult = Array<never>;
+// Query: *[_type == "poem"] {        "slug": slug.current    }
+export type ListPoetrySlugResult = Array<{
+  slug: string;
+}>;
 
 // Source: ./sanity/queries/readingLog.ts
 // Variable: listReadingLog
@@ -837,9 +984,9 @@ declare module "@sanity/client" {
     "\n    *[_type == \"poetOfTheMonth\"] | order(publishedAt desc)\n  ": ListPoetOfTheMonthResult;
     "\n    *[_type == \"poetOfTheMonth\" && slug.current == $slug][0]\n  ": GetPoetOfTheMonthBySlugResult;
     "\n    *[_type == \"poetOfTheMonth\"] {\n        \"slug\": slug.current\n    }\n  ": ListPoetOfTheMonthSlugResult;
-    "\n    *[_type == \"poetry\"] | order(publishedAt desc)\n  ": ListPoetryResult;
-    "\n    *[_type == \"poetry\" && slug.current == $slug][0]\n  ": GetPoetryBySlugResult;
-    "\n    *[_type == \"poetry\"] {\n        \"slug\": slug.current\n    }\n  ": ListPoetrySlugResult;
+    "\n    *[_type == \"poem\"] | order(publishedAt desc)\n  ": ListPoetryResult;
+    "\n    *[_type == \"poem\" && slug.current == $slug][0]\n  ": GetPoetryBySlugResult;
+    "\n    *[_type == \"poem\"] {\n        \"slug\": slug.current\n    }\n  ": ListPoetrySlugResult;
     "\n    *[_type == \"readingLog\"] | order(publishedAt asc)\n  ": ListReadingLogResult;
     "\n    *[_type == \"readingLog\" && slug.current == $slug][0]\n  ": GetReadingLogBySlugResult;
     "\n    *[_type == \"readingLog\" && defined(slug.current)] {\n        \"slug\": slug.current\n    }\n  ": ListReadingLogSlugResult;

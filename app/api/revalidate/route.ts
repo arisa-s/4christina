@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
     switch (type) {
       case "miscProse":
         if (slug?.current) {
-          urlsToRevalidate = [`/misc-prose/${slug.current}`, `/misc-prose`];
+          urlsToRevalidate = [`/misc-prose`];
         }
         break;
 
@@ -41,26 +41,23 @@ export async function POST(req: NextRequest) {
 
       case "poetOfTheMonth":
         if (slug?.current) {
-          urlsToRevalidate = [
-            `/poet-of-the-month/${slug.current}`,
-            `/poet-of-the-month`,
-          ];
+          urlsToRevalidate = [`/poet-of-the-month`];
 
           break;
         }
       case "poetry":
         if (slug?.current) {
-          urlsToRevalidate = [`/poetry/${slug.current}`, `/poetry`];
+          urlsToRevalidate = [`/poetry`];
         }
 
       case "miscProse":
         if (slug?.current) {
-          urlsToRevalidate = [`/misc-prose/${slug.current}`, `/misc-prose`];
+          urlsToRevalidate = [`/misc-prose`];
         }
 
       case "readingLog":
         if (slug?.current) {
-          urlsToRevalidate = [`/reading-log/${slug.current}`, `/reading-log`];
+          urlsToRevalidate = [`/reading-log`];
         }
         break;
     }
