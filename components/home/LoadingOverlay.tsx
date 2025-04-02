@@ -37,16 +37,16 @@ export function LoadingOverlay({
   if (!showLoading) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-surface-primary z-50 bg-white/20 backdrop-blur-sm">
+    <div className="fixed inset-0 flex items-center justify-center bg-surface-primary z-50 bg-black/20 backdrop-blur-sm">
       <div className="flex items-center justify-center">
         <Bars
           height="20"
           width="20"
-          color="#FFFFF"
+          color="white"
           ariaLabel="audio-loading"
           visible={true}
         />
-        {text && <p className="text-white">{text}</p>}
+        {text && <p className="ml-4 text-white">{text}</p>}
       </div>
     </div>
   );
