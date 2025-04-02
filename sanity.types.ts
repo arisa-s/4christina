@@ -475,7 +475,7 @@ export type ListInspirationsResult = Array<{
 
 // Source: ./sanity/queries/miscProse.ts
 // Variable: listMiscProse
-// Query: *[_type == "miscProse"] | order(date asc)
+// Query: *[_type == "miscProse"] | order(publishedAt desc)
 export type ListMiscProseResult = Array<{
   _id: string;
   _type: "miscProse";
@@ -831,7 +831,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "\n    *[_type == \"haiku\"] | order(date desc)\n  ": ListHaikuResult;
     "\n    *[_type == \"inspiration\"] | order(publishedAt desc)\n  ": ListInspirationsResult;
-    "\n    *[_type == \"miscProse\"] | order(date asc)\n  ": ListMiscProseResult;
+    "\n    *[_type == \"miscProse\"] | order(publishedAt desc)\n  ": ListMiscProseResult;
     "\n    *[_type == \"miscProse\" && slug.current == $slug][0]\n  ": GetMiscProseBySlugResult;
     "\n    *[_type == \"miscProse\"] {\n        \"slug\": slug.current\n    }\n  ": ListMiscProseSlugResult;
     "\n    *[_type == \"poetOfTheMonth\"] | order(publishedAt desc)\n  ": ListPoetOfTheMonthResult;

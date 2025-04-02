@@ -5,11 +5,7 @@ export interface CardHeaderProps {
 }
 
 export const CardHeader: FC<CardHeaderProps> = ({ children }) => {
-  return (
-    <h2 className="text-base md:text-lg font-medium text-primary">
-      {children}
-    </h2>
-  );
+  return <h2 className="text-base font-medium text-primary">{children}</h2>;
 };
 
 export default CardHeader;
