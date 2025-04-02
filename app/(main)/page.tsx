@@ -1,7 +1,4 @@
-import { AutoplayVideo } from "@/components/shared/AutoplayVideo";
-import Image from "next/image";
-import Link from "next/link";
-
+import { VideoLink, ImageLink } from "@/components/home";
 // Example image imports (adjust paths as needed)
 import home1 from "../../public/homePoems/home-1.jpeg";
 import home7 from "../../public/homePoems/home-7.png";
@@ -14,8 +11,6 @@ import home8 from "../../public/homePoems/home-8.png";
 import home10 from "../../public/homePoems/home-10.png";
 import home13 from "../../public/homePoems/home-13.jpeg";
 
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
-
 export default function Home() {
   return (
     <div className="columns-2 md:columns-3 gap-4 space-y-6 md:ml-20">
@@ -26,13 +21,11 @@ export default function Home() {
         alt="hero"
         className="md:w-3/4 cursor-pointer"
       />
-      <AutoplayVideo
+      <VideoLink
         src="/homePoems/home-4.mov"
         href="/poetry/fervent-prophecy"
         width={396}
         height={924}
-        // If it's a .mov, remove or change the type:
-        // type="video/quicktime"
         className="ml-4 md:ml-0 w-3/5 md:w-1/2 cursor-pointer"
       />
       <ImageLink
@@ -59,7 +52,7 @@ export default function Home() {
       />
 
       {/* Col 2 (desktop) */}
-      <AutoplayVideo
+      <VideoLink
         src="/homePoems/home-2.mp4"
         href="/poetry/atomic-olive"
         width={1330}
@@ -68,7 +61,7 @@ export default function Home() {
         className="w-full md:-ml-24 cursor-pointer"
       />
       {/* Col 2 (mobile) */}
-      <AutoplayVideo
+      <VideoLink
         src="/homePoems/home-5.mov"
         href="/poetry/kobayashi-issa"
         width={1440}
@@ -77,7 +70,7 @@ export default function Home() {
       />
       <div className="hidden md:block w-full h-72"></div>
       <div className="hidden md:block w-full h-12"></div>
-      <AutoplayVideo
+      <VideoLink
         src="/homePoems/home-9.mp4"
         href="/poetry/chaulking-chatham-port"
         width={1146}
@@ -85,7 +78,7 @@ export default function Home() {
         className="w-4/5 -ml-12 md:-ml-52 cursor-pointer"
       />
       <div className="md:hidden w-full h-6"></div>
-      <AutoplayVideo
+      <VideoLink
         src="/homePoems/home-14.mp4"
         href="/poetry/black-rock-seaside"
         width={1014}
@@ -135,35 +128,6 @@ export default function Home() {
         alt="hero"
         className="w-2/3 md:w-full md:-ml-20 cursor-pointer"
       />
-    </div>
-  );
-}
-
-// Helper component for images
-function ImageLink({
-  src,
-  alt,
-  href,
-  className,
-  style,
-}: {
-  src: string | StaticImport;
-  alt: string;
-  href: string;
-  className?: string;
-  style?: React.CSSProperties;
-}) {
-  return (
-    <div>
-      <Link href={href}>
-        <Image
-          src={src}
-          alt={alt}
-          className={className}
-          style={style}
-          priority
-        />
-      </Link>
     </div>
   );
 }
